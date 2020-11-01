@@ -10,6 +10,15 @@ class ModuleCamera : public Module
 {
 public:
 
+	enum CameraMovement {
+		UP,
+		DOWN,
+		LEFT,
+		RIGHT,
+		FORWARD,
+		BACKWARD
+	};
+
 	ModuleCamera();
 	~ModuleCamera();
 
@@ -17,9 +26,12 @@ public:
 	update_status Update();
 	bool CleanUp();
 
+	void move(const CameraMovement &movementType);
 	
 
 private:
 	Frustum frustum;
+	float verticalSpeed = 1.0f;
+	float horizontalSpeed = 1.0f;
 
 };
