@@ -1,3 +1,6 @@
-﻿  ModuleCamera.cpp
-C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(19,63): warning C4305: 'argument': truncation from 'double' to 'float'
+﻿  Application.cpp
+  ModuleCamera.cpp
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(20,63): warning C4305: 'argument': truncation from 'double' to 'float'
+  ModuleTime.cpp
+  Generating Code...
   Engine.vcxproj -> C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\Debug\EngineMaster.exe

@@ -134,6 +134,7 @@
       <Filter>MathGeoLib\Algorithm</Filter>
     </ClCompile>
     <ClCompile Include="ModuleCamera.cpp" />
+    <ClCompile Include="ModuleTime.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -371,6 +372,7 @@
       <Filter>MathGeoLib</Filter>
     </ClInclude>
     <ClInclude Include="ModuleCamera.h" />
+    <ClInclude Include="ModuleTime.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="MathGeoLib">

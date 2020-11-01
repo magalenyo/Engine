@@ -3,6 +3,7 @@
 #include "GL/glew.h"
 #include "Application.h"
 #include "ModuleInput.h"
+#include "ModuleTime.h"
 
 ModuleCamera::ModuleCamera()
 {
@@ -102,14 +103,14 @@ void ModuleCamera::move(const CameraMovement& movementType)
 		case UP:
 			frustum.SetPos(float3(
 				frustum.Pos().x, 
-				frustum.Pos().y + verticalSpeed, 
+				frustum.Pos().y + verticalSpeed * App->time->DeltaTime(), 
 				frustum.Pos().z)
 			);
 			break;
 		case DOWN:
 			frustum.SetPos(float3(
 				frustum.Pos().x,
-				frustum.Pos().y - verticalSpeed,
+				frustum.Pos().y - verticalSpeed * App->time->DeltaTime(),
 				frustum.Pos().z)
 			);
 			break;
