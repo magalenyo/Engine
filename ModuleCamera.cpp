@@ -88,6 +88,18 @@ update_status ModuleCamera::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_E)) {
 		App->camera->move(ModuleCamera::DOWN);
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_W)) {
+		App->camera->move(ModuleCamera::FORWARD);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_S)) {
+		App->camera->move(ModuleCamera::BACKWARD);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_A)) {
+		App->camera->move(ModuleCamera::LEFT);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_D)) {
+		App->camera->move(ModuleCamera::RIGHT);
+	}
 
 	return UPDATE_CONTINUE;
 }
@@ -114,13 +126,25 @@ void ModuleCamera::move(const CameraMovement& movementType)
 				frustum.Pos().z)
 			);
 			break;
-		case LEFT:
+		case LEFT: {
+			float3 newPosition = vec((frustum.Pos().x - horizontalSpeed * App->time->DeltaTime()) * frustum.WorldRight().x, frustum.Pos().y, frustum.Pos().z);
+			frustum.SetPos(newPosition);
+		}
 			break;
-		case RIGHT:
+		case RIGHT: {
+			float3 newPosition = vec((frustum.Pos().x + horizontalSpeed * App->time->DeltaTime()) * frustum.WorldRight().x, frustum.Pos().y, frustum.Pos().z);
+			frustum.SetPos(newPosition);
+		}
 			break;
-		case FORWARD:
+		case FORWARD: {
+			float3 newPosition = vec(frustum.Pos().x, frustum.Pos().y, (frustum.Pos().z + horizontalSpeed * App->time->DeltaTime()) * frustum.Front().z);
+			frustum.SetPos(newPosition);
+		}
 			break;
-		case BACKWARD:
+		case BACKWARD: {
+			float3 newPosition = vec(frustum.Pos().x, frustum.Pos().y, (frustum.Pos().z - horizontalSpeed * App->time->DeltaTime()) * frustum.Front().z);
+			frustum.SetPos(newPosition);
+		}
 			break;
 		default:
 			break;
