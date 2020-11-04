@@ -115,7 +115,7 @@ void ModuleCamera::move(const CameraMovement& movementType)
 		case UP:
 			frustum.SetPos(float3(
 				frustum.Pos().x, 
-				frustum.Pos().y + verticalSpeed * App->time->DeltaTime(), 
+				frustum.Pos().y + (verticalSpeed * App->time->DeltaTime() * frustum.Up().Normalized().y), 
 				frustum.Pos().z)
 			);
 			break;
@@ -127,12 +127,12 @@ void ModuleCamera::move(const CameraMovement& movementType)
 			);
 			break;
 		case LEFT: {
-			float3 newPosition = vec((frustum.Pos().x - horizontalSpeed * App->time->DeltaTime()) * frustum.WorldRight().x, frustum.Pos().y, frustum.Pos().z);
+			float3 newPosition = vec(frustum.Pos().x - (horizontalSpeed * App->time->DeltaTime() * frustum.WorldRight().x), frustum.Pos().y, frustum.Pos().z);
 			frustum.SetPos(newPosition);
 		}
 			break;
 		case RIGHT: {
-			float3 newPosition = vec((frustum.Pos().x + horizontalSpeed * App->time->DeltaTime()) * frustum.WorldRight().x, frustum.Pos().y, frustum.Pos().z);
+			float3 newPosition = vec(frustum.Pos().x + (horizontalSpeed * App->time->DeltaTime() * frustum.WorldRight().x), frustum.Pos().y, frustum.Pos().z);
 			frustum.SetPos(newPosition);
 		}
 			break;
