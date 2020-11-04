@@ -19,6 +19,15 @@ public:
 		BACKWARD
 	};
 
+	enum CameraRotation {
+		ROLL_POSITIVE,
+		ROLL_NEGATIVE,
+		PITCH_POSITIVE,
+		PITCH_NEGATIVE,
+		YAW_POSITIVE,
+		YAW_NEGATIVE
+	};
+
 	ModuleCamera();
 	~ModuleCamera();
 
@@ -27,11 +36,13 @@ public:
 	bool CleanUp();
 
 	void move(const CameraMovement &movementType);
+	void rotate(const CameraRotation& rotationType);
 	
 
 private:
 	Frustum frustum;
 	float verticalSpeed = 1.0f;
 	float horizontalSpeed = 1.0f;
+	float rotationSpeed = 1.0f;
 
 };

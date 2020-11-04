@@ -5,6 +5,7 @@
 #include "ModuleInput.h"
 #include "ModuleTime.h"
 
+
 ModuleCamera::ModuleCamera()
 {
 }
@@ -83,23 +84,34 @@ update_status ModuleCamera::Update()
 
 
 	if (App->input->GetKey(SDL_SCANCODE_Q)) {
-		App->camera->move(ModuleCamera::UP);
+		App->camera->move(CameraMovement::UP);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_E)) {
-		App->camera->move(ModuleCamera::DOWN);
+		App->camera->move(CameraMovement::DOWN);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_W)) {
-		App->camera->move(ModuleCamera::FORWARD);
+		App->camera->move(CameraMovement::FORWARD);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_S)) {
-		App->camera->move(ModuleCamera::BACKWARD);
+		App->camera->move(CameraMovement::BACKWARD);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_A)) {
-		App->camera->move(ModuleCamera::LEFT);
+		App->camera->move(CameraMovement::LEFT);
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_D)) {
-		App->camera->move(ModuleCamera::RIGHT);
+		App->camera->move(CameraMovement::RIGHT);
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_UP)) {
+		App->camera->rotate(CameraRotation::PITCH_POSITIVE);
+	}
+
+	else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
+		App->camera->rotate(CameraRotation::PITCH_NEGATIVE);
+	}
+
+	#ifdef _DEBUG	
+	LOG(frustum.ToString().c_str());
+	#endif // _DEBUG
 
 	return UPDATE_CONTINUE;
 }
@@ -112,41 +124,65 @@ bool ModuleCamera::CleanUp()
 void ModuleCamera::move(const CameraMovement& movementType)
 {
 	switch (movementType) {
-		case UP:
-			frustum.SetPos(float3(
-				frustum.Pos().x, 
-				frustum.Pos().y + (verticalSpeed * App->time->DeltaTime() * frustum.Up().Normalized().y), 
-				frustum.Pos().z)
-			);
+		case UP: {
+			float3 newPosition = frustum.Up().Normalized() * verticalSpeed * App->time->DeltaTime();
+			frustum.SetPos(frustum.Pos() + newPosition);
+		}
 			break;
-		case DOWN:
-			frustum.SetPos(float3(
-				frustum.Pos().x,
-				frustum.Pos().y - verticalSpeed * App->time->DeltaTime(),
-				frustum.Pos().z)
-			);
+		case DOWN: {
+			float3 newPosition = frustum.Up().Normalized() * verticalSpeed * App->time->DeltaTime();
+			frustum.SetPos(frustum.Pos() - newPosition);
+		}
+
 			break;
 		case LEFT: {
-			float3 newPosition = vec(frustum.Pos().x - (horizontalSpeed * App->time->DeltaTime() * frustum.WorldRight().x), frustum.Pos().y, frustum.Pos().z);
-			frustum.SetPos(newPosition);
+			float3 newPosition = frustum.WorldRight().Normalized() * horizontalSpeed * App->time->DeltaTime();
+			frustum.SetPos(frustum.Pos() - newPosition);
 		}
 			break;
 		case RIGHT: {
-			float3 newPosition = vec(frustum.Pos().x + (horizontalSpeed * App->time->DeltaTime() * frustum.WorldRight().x), frustum.Pos().y, frustum.Pos().z);
-			frustum.SetPos(newPosition);
+			float3 newPosition = frustum.WorldRight().Normalized() * horizontalSpeed * App->time->DeltaTime();
+			frustum.SetPos(frustum.Pos() + newPosition);
 		}
 			break;
 		case FORWARD: {
-			float3 newPosition = vec(frustum.Pos().x, frustum.Pos().y, (frustum.Pos().z + horizontalSpeed * App->time->DeltaTime()) * frustum.Front().z);
-			frustum.SetPos(newPosition);
+			float3 newPosition = frustum.Front().Normalized() * horizontalSpeed * App->time->DeltaTime();
+			frustum.SetPos(frustum.Pos() + newPosition);
 		}
 			break;
 		case BACKWARD: {
-			float3 newPosition = vec(frustum.Pos().x, frustum.Pos().y, (frustum.Pos().z - horizontalSpeed * App->time->DeltaTime()) * frustum.Front().z);
-			frustum.SetPos(newPosition);
+			float3 newPosition = frustum.Front().Normalized() * horizontalSpeed * App->time->DeltaTime();
+			frustum.SetPos(frustum.Pos() - newPosition);
 		}
 			break;
 		default:
+			break;
+
+	}
+}
+
+void ModuleCamera::rotate(const CameraRotation& rotationType)
+{
+	switch (rotationType) {
+		case PITCH_POSITIVE: {
+			//float3x3 rotationMatrix = float3x3(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
+
+			//float3x4 rotationMatrix = frustum.ViewMatrix().RotateY(DEGTORAD * rotationSpeed);
+
+			//vec oldFront = frustum.Front().Normalized();
+			//frustum.SetFront(rotationMatrix * oldFront));
+
+			//vec oldUp = frustum.Up().Normalized();
+			//frustum.SetUp(rotationMatrix.MultDir(oldUp));
+
+			////float3x4 rotationMatrix = frustum.ViewMatrix().RotateY(DEGTORAD * rotationSpeed);
+			//frustum.ViewMatrix().Set(rotationMatrix);
+
+		}
+			break;
+		case PITCH_NEGATIVE: {
+			frustum.ViewMatrix().RotateY(-rotationSpeed);
+		}
 			break;
 	}
 }
