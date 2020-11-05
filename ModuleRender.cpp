@@ -5,6 +5,8 @@
 #include "SDL.h"
 #include "GL/glew.h"
 #include "Geometry/Frustum.h"
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
 
 
 ModuleRender::ModuleRender()
@@ -77,6 +79,9 @@ update_status ModuleRender::Update()
 
 update_status ModuleRender::PostUpdate()
 {
+	// this function should be before the swap window function
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 	SDL_GL_SwapWindow(App->window->window);
 	return UPDATE_CONTINUE;
 }
