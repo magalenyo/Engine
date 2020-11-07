@@ -24,6 +24,7 @@ bool ModuleRender::Init()
 {
 	LOG("Creating Renderer context");
 	
+	// THESE SHOULD BE CALLED BEFORE THE CREATION OF THE WINDOW
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4); // desired version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 6);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_COMPATIBILITY);
@@ -33,7 +34,6 @@ bool ModuleRender::Init()
 	SDL_GL_CreateContext(App->window->window);
 
 
-	//glewInit();
 	GLenum err = glewInit();
 	// … check for errors
 	LOG("Using Glew %s", glewGetString(GLEW_VERSION));
