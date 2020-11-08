@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "ModuleInput.h"
 #include "ModuleTime.h"
+#include "Math/float3x3.h"
 
 
 ModuleCamera::ModuleCamera()
@@ -23,6 +24,7 @@ bool ModuleCamera::Init()
 	frustum.SetPos(float3(0, 1, -2));
 	frustum.SetFront(float3::unitZ);
 	frustum.SetUp(float3::unitY);
+	//frustum.SetFront(vec(0, 0, 0));
 
 	return true;
 }
@@ -104,10 +106,16 @@ update_status ModuleCamera::Update()
 	else if (App->input->GetKey(SDL_SCANCODE_UP)) {
 		App->camera->rotate(CameraRotation::PITCH_POSITIVE);
 	}
-
 	else if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
 		App->camera->rotate(CameraRotation::PITCH_NEGATIVE);
 	}
+	else if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
+		App->camera->rotate(CameraRotation::YAW_NEGATIVE);
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
+		App->camera->rotate(CameraRotation::YAW_POSITIVE);
+	}
+	
 
 	#ifdef _DEBUG	
 	LOG(frustum.ToString().c_str());
@@ -165,23 +173,34 @@ void ModuleCamera::rotate(const CameraRotation& rotationType)
 {
 	switch (rotationType) {
 		case PITCH_POSITIVE: {
-			//float3x3 rotationMatrix = float3x3(0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f);
-
-			//float3x4 rotationMatrix = frustum.ViewMatrix().RotateY(DEGTORAD * rotationSpeed);
-
-			//vec oldFront = frustum.Front().Normalized();
-			//frustum.SetFront(rotationMatrix * oldFront));
-
-			//vec oldUp = frustum.Up().Normalized();
-			//frustum.SetUp(rotationMatrix.MultDir(oldUp));
-
-			////float3x4 rotationMatrix = frustum.ViewMatrix().RotateY(DEGTORAD * rotationSpeed);
-			//frustum.ViewMatrix().Set(rotationMatrix);
-
+			//float3x3 rotation = float3x3::RotateY(-rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			// i think this is the absolute
+			float3x3 rotation = float3x3::RotateAxisAngle(frustum.WorldRight().Normalized(), rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			// and this is the relative
+			//float3x3 rotation = float3x3::RotateX(rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			frustum.SetFront(rotation * frustum.Front().Normalized());
+			frustum.SetUp(rotation * frustum.Up().Normalized());
 		}
 			break;
 		case PITCH_NEGATIVE: {
-			frustum.ViewMatrix().RotateY(-rotationSpeed);
+			//float3x3 rotation = float3x3::RotateY(rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			float3x3 rotation = float3x3::RotateAxisAngle(frustum.WorldRight().Normalized(), -rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			frustum.SetFront(rotation * frustum.Front().Normalized());
+			frustum.SetUp(rotation * frustum.Up().Normalized());
+		}
+		   break;
+		case YAW_POSITIVE: {
+			//float3x3 rotation = float3x3::RotateY(rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			float3x3 rotation = float3x3::RotateAxisAngle(frustum.Up().Normalized(), -rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			frustum.SetFront(rotation * frustum.Front().Normalized());
+			frustum.SetUp(rotation * frustum.Up().Normalized());
+		}
+			break;
+		case YAW_NEGATIVE: {
+			//float3x3 rotation = float3x3::RotateY(-rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			float3x3 rotation = float3x3::RotateAxisAngle(frustum.Up().Normalized(), rotationSpeed * DEGTORAD * App->time->DeltaTime());
+			frustum.SetFront(rotation * frustum.Front().Normalized());
+			frustum.SetUp(rotation * frustum.Up().Normalized());
 		}
 			break;
 	}

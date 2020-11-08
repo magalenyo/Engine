@@ -1,2 +1,7 @@
-﻿  ModuleEditor.cpp
+﻿  ModuleCamera.cpp
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(22,63): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(178,110): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(187,111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(194,103): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(201,102): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Engine.vcxproj -> C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\Debug\EngineMaster.exe
