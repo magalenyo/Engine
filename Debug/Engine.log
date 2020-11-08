@@ -1,10 +1,12 @@
-﻿  Application.cpp
-  ModuleCamera.cpp
+﻿  ModuleCamera.cpp
 C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(22,63): warning C4305: 'argument': truncation from 'double' to 'float'
-C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(185,110): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(191,111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(197,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(204,67): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-  ModuleInput.cpp
-  Generating Code...
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(129,83): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(129,59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(129,35): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(166,31): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(172,31): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(189,110): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(195,111): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(201,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(208,67): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
   Engine.vcxproj -> C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\Debug\EngineMaster.exe

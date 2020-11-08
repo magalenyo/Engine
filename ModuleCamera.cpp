@@ -24,7 +24,6 @@ bool ModuleCamera::Init()
 	frustum.SetPos(float3(0, 1, -2));
 	frustum.SetFront(float3::unitZ);
 	frustum.SetUp(float3::unitY);
-	//frustum.SetFront(vec(0, 0, 0));
 
 	return true;
 }
@@ -99,10 +98,10 @@ update_status ModuleCamera::Update()
 	if (App->input->GetKey(SDL_SCANCODE_E)) {
 		App->camera->move(CameraMovement::DOWN);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_W)) {
+	if (App->input->GetKey(SDL_SCANCODE_W) || App->input->GetMouseWheelState() == ModuleInput::MouseWheelState::SCROLLING_UP) {
 		App->camera->move(CameraMovement::FORWARD);
 	}
-	if (App->input->GetKey(SDL_SCANCODE_S)) {
+	if (App->input->GetKey(SDL_SCANCODE_S) || App->input->GetMouseWheelState() == ModuleInput::MouseWheelState::SCROLLING_DOWN) {
 		App->camera->move(CameraMovement::BACKWARD);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A)) {
@@ -125,7 +124,10 @@ update_status ModuleCamera::Update()
 	}
 	
 	#ifdef _DEBUG	
-	LOG(frustum.ToString().c_str());
+	//LOG(frustum.ToString().c_str());
+	float3 rotDegree = frustum.ViewMatrix().ToEulerXYZ();
+	rotDegree = float3(rotDegree.x * RADTODEG, rotDegree.y * RADTODEG, rotDegree.z * RADTODEG);
+	LOG(rotDegree.ToString().c_str());
 	#endif // _DEBUG
 
 	return UPDATE_CONTINUE;
@@ -161,12 +163,14 @@ void ModuleCamera::move(const CameraMovement& movementType)
 		}
 			break;
 		case FORWARD: {
-			float3 newPosition = frustum.Front().Normalized() * horizontalSpeed * App->time->DeltaTime();
+			float mouseSpeedMultiplier = App->input->GetMouseWheelState() == ModuleInput::MouseWheelState::SCROLLING_UP ? 4 : 1;
+			float3 newPosition = frustum.Front().Normalized() * horizontalSpeed * mouseSpeedMultiplier * App->time->DeltaTime();
 			frustum.SetPos(frustum.Pos() + newPosition);
 		}
 			break;
 		case BACKWARD: {
-			float3 newPosition = frustum.Front().Normalized() * horizontalSpeed * App->time->DeltaTime();
+			float mouseSpeedMultiplier = App->input->GetMouseWheelState() == ModuleInput::MouseWheelState::SCROLLING_DOWN ? 4 : 1;
+			float3 newPosition = frustum.Front().Normalized() * horizontalSpeed * mouseSpeedMultiplier * App->time->DeltaTime();
 			frustum.SetPos(frustum.Pos() - newPosition);
 		}
 			break;
@@ -205,6 +209,8 @@ void ModuleCamera::rotate(const CameraRotation& rotationType)
 			//float3x3 rotation = float3x3::RotateAxisAngle(frustum.Up().Normalized(), rotationSpeed * DEGTORAD * App->time->DeltaTime());
 			frustum.SetFront(rotation * frustum.Front().Normalized());
 			frustum.SetUp(rotation * frustum.Up().Normalized());
+			
+				
 		}
 			break;
 	}

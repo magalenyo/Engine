@@ -70,7 +70,7 @@ update_status ModuleInput::Update()
 		if (mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
 	}
-
+	mouseWheelState = MouseWheelState::SCROLLING_IDLE;
 	while (SDL_PollEvent(&event) != 0)
 	{
 		switch (event.type)
@@ -111,8 +111,22 @@ update_status ModuleInput::Update()
 			/*mouse_motion.x = event.motion.xrel / SCREEN_SIZE;
 			mouse_motion.y = event.motion.yrel / SCREEN_SIZE;
 			mouse.x = event.motion.x / SCREEN_SIZE;
-			mouse.y = event.motion.y / SCREEN_SIZE;
-			break;*/
+			mouse.y = event.motion.y / SCREEN_SIZE;*/
+			
+			break;
+		case SDL_MOUSEWHEEL: {
+			if (event.wheel.y > 0) // scroll up
+			{
+				mouseWheelState = MouseWheelState::SCROLLING_UP;
+			}
+			else if (event.wheel.y < 0) // scroll down
+			{
+				mouseWheelState = MouseWheelState::SCROLLING_DOWN;
+			}
+			else {
+				mouseWheelState = MouseWheelState::SCROLLING_IDLE;
+			}
+		}
 			break;
 		}
 	}
@@ -131,7 +145,7 @@ bool ModuleInput::CleanUp()
 	return true;
 }
 
-bool ModuleInput::GetWindowEvent(EventWindow ev) const
-{
-	return windowEvents[ev];
-}
+//bool ModuleInput::GetWindowEvent(EventWindow ev) const
+//{
+//	return windowEvents[ev];
+//}

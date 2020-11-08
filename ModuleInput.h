@@ -24,9 +24,18 @@ enum KeyState
 	KEY_UP
 };
 
+
+
 class ModuleInput : public Module
 {
 public:
+
+	enum MouseWheelState
+	{
+		SCROLLING_UP,
+		SCROLLING_DOWN,
+		SCROLLING_IDLE
+	};
 	
 	ModuleInput();
 	~ModuleInput();
@@ -46,11 +55,21 @@ public:
 	}
 
 	// Check for window events last frame
-	bool GetWindowEvent(EventWindow code) const;
+	bool GetWindowEvent(EventWindow ev) const
+	{
+		return windowEvents[ev];
+	}
+
+	MouseWheelState GetMouseWheelState() const
+	{
+		return mouseWheelState;
+	}
 
 private:
 	//const Uint8 *keyboard = NULL;
 	bool		windowEvents[WE_COUNT];
-	KeyState* keyboard;
+	KeyState*   keyboard;
 	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
+
+	MouseWheelState	mouseWheelState = MouseWheelState::SCROLLING_IDLE;
 };
