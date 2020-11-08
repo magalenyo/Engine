@@ -83,15 +83,16 @@ update_status ModuleCamera::Update()
 
 	// SEND THE PROJECTIONMATRIX AND VIEWMATRIX
 
-	/* SPEED CONTROL */
+	/* START SPEED CONTROL */
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) && App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT) {
 		increaseSpeed();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_UP) {
 		resetSpeed();
 	}
-	/* SPEED CONTROL */
+	/* END SPEED CONTROL */
 
+	/* START MOVEMENT CONTROL */
 	if (App->input->GetKey(SDL_SCANCODE_Q)) {
 		App->camera->move(CameraMovement::UP);
 	}
@@ -110,6 +111,9 @@ update_status ModuleCamera::Update()
 	if (App->input->GetKey(SDL_SCANCODE_D)) {
 		App->camera->move(CameraMovement::RIGHT);
 	}
+	/* END MOVEMENT CONTROL */
+
+	/* START ROTATION CONTROL */
 	if (App->input->GetKey(SDL_SCANCODE_UP)) {
 		App->camera->rotate(CameraRotation::PITCH_POSITIVE);
 	}
@@ -122,6 +126,7 @@ update_status ModuleCamera::Update()
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
 		App->camera->rotate(CameraRotation::YAW_POSITIVE);
 	}
+	/* END ROTATION CONTROL */
 	
 	#ifdef _DEBUG	
 	//LOG(frustum.ToString().c_str());
