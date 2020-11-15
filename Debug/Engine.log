@@ -11,6 +11,8 @@ C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCame
 C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(212,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(219,67): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(247,68): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(252,41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\ModuleCamera.cpp(257,39): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   ModuleInput.cpp
   Generating Code...
   Engine.vcxproj -> C:\Users\MiguelÁngelBuenoRive\Desktop\UPC\C++ for Video Games\Engine\Debug\EngineMaster.exe
