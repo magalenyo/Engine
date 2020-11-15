@@ -83,48 +83,54 @@ update_status ModuleCamera::Update()
 
 	// SEND THE PROJECTIONMATRIX AND VIEWMATRIX
 
+	/* START CAMERA SETTINGS */
+	if (App->input->GetWindowEvent(ModuleInput::EventWindow::WE_RESIZED)) {
+
+	}
+	/* END CAMERA SETTINGS */
+
 	/* START SPEED CONTROL */
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) && App->input->GetKey(SDL_SCANCODE_LSHIFT) != KEY_REPEAT) {
-		increaseSpeed();
+		IncreaseSpeed();
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_UP) {
-		resetSpeed();
+		ResetSpeed();
 	}
 	/* END SPEED CONTROL */
 
 	/* START MOVEMENT CONTROL */
 	if (App->input->GetKey(SDL_SCANCODE_Q)) {
-		App->camera->move(CameraMovement::UP);
+		App->camera->Move(CameraMovement::UP);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_E)) {
-		App->camera->move(CameraMovement::DOWN);
+		App->camera->Move(CameraMovement::DOWN);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_W) || App->input->GetMouseWheelState() == ModuleInput::MouseWheelState::SCROLLING_UP) {
-		App->camera->move(CameraMovement::FORWARD);
+		App->camera->Move(CameraMovement::FORWARD);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) || App->input->GetMouseWheelState() == ModuleInput::MouseWheelState::SCROLLING_DOWN) {
-		App->camera->move(CameraMovement::BACKWARD);
+		App->camera->Move(CameraMovement::BACKWARD);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A)) {
-		App->camera->move(CameraMovement::LEFT);
+		App->camera->Move(CameraMovement::LEFT);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D)) {
-		App->camera->move(CameraMovement::RIGHT);
+		App->camera->Move(CameraMovement::RIGHT);
 	}
 	/* END MOVEMENT CONTROL */
 
 	/* START ROTATION CONTROL */
 	if (App->input->GetKey(SDL_SCANCODE_UP)) {
-		App->camera->rotate(CameraRotation::PITCH_POSITIVE);
+		App->camera->Rotate(CameraRotation::PITCH_POSITIVE);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_DOWN)) {
-		App->camera->rotate(CameraRotation::PITCH_NEGATIVE);
+		App->camera->Rotate(CameraRotation::PITCH_NEGATIVE);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT)) {
-		App->camera->rotate(CameraRotation::YAW_NEGATIVE);
+		App->camera->Rotate(CameraRotation::YAW_NEGATIVE);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT)) {
-		App->camera->rotate(CameraRotation::YAW_POSITIVE);
+		App->camera->Rotate(CameraRotation::YAW_POSITIVE);
 	}
 	/* END ROTATION CONTROL */
 	
@@ -143,7 +149,7 @@ bool ModuleCamera::CleanUp()
 	return true;
 }
 
-void ModuleCamera::move(const CameraMovement& movementType)
+void ModuleCamera::Move(const CameraMovement& movementType)
 {
 	switch (movementType) {
 		case UP: {
@@ -185,7 +191,7 @@ void ModuleCamera::move(const CameraMovement& movementType)
 	}
 }
 
-void ModuleCamera::rotate(const CameraRotation& rotationType)
+void ModuleCamera::Rotate(const CameraRotation& rotationType)
 {
 	switch (rotationType) {
 		case PITCH_POSITIVE: {
@@ -221,16 +227,43 @@ void ModuleCamera::rotate(const CameraRotation& rotationType)
 	}
 }
 
-void ModuleCamera::resetSpeed()
+void ModuleCamera::ResetSpeed()
 {
 	verticalSpeed = 1.0f;
 	horizontalSpeed = 1.0f;
 	rotationSpeed = 10.0f;
 }
 
-void ModuleCamera::increaseSpeed()
+void ModuleCamera::IncreaseSpeed()
 {
 	verticalSpeed *= 2.0f;
 	horizontalSpeed *= 2.0f;
 	rotationSpeed *= 2.0f;
+}
+
+void ModuleCamera::OnWindowResized(int width, int height)
+{
+	// aspect ratio is needed so it does not 
+	frustum.SetVerticalFovAndAspectRatio(frustum.VerticalFov(), width / height);
+}
+
+void ModuleCamera::SetHorizontalFov(int fov)
+{
+	frustum.SetHorizontalFovAndAspectRatio(fov, frustum.AspectRatio());
+}
+
+void ModuleCamera::SetVerticalFov(int fov)
+{
+	frustum.SetVerticalFovAndAspectRatio(fov, frustum.AspectRatio());
+
+}
+
+void ModuleCamera::SetNearPlaneDistance(float dist)
+{
+	frustum.SetViewPlaneDistances(dist, frustum.FarPlaneDistance());
+}
+
+void ModuleCamera::SetFarPlaneDistance(float dist)
+{
+	frustum.SetViewPlaneDistances(frustum.NearPlaneDistance(), dist);
 }

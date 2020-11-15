@@ -8,14 +8,6 @@ typedef unsigned __int8 Uint8;
 
 #define NUM_MOUSE_BUTTONS 5
 
-enum EventWindow
-{
-	WE_QUIT = 0,
-	WE_HIDE = 1,
-	WE_SHOW = 2,
-	WE_COUNT
-};
-
 enum KeyState
 {
 	KEY_IDLE = 0,
@@ -25,10 +17,18 @@ enum KeyState
 };
 
 
-
 class ModuleInput : public Module
 {
 public:
+
+	enum EventWindow
+	{
+		WE_QUIT = 0,
+		WE_HIDE = 1,
+		WE_SHOW = 2,
+		WE_RESIZED = 3,
+		WE_COUNT
+	};
 
 	enum MouseWheelState
 	{

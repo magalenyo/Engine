@@ -96,6 +96,10 @@ update_status ModuleInput::Update()
 			case SDL_WINDOWEVENT_RESTORED:
 				windowEvents[WE_SHOW] = true;
 				break;
+			case SDL_WINDOWEVENT_RESIZED:
+				App->camera->OnWindowResized(event.window.data1, event.window.data2);
+				windowEvents[WE_RESIZED] = true;		// this might not be needed
+				break;
 			}
 			break;
 
@@ -144,8 +148,3 @@ bool ModuleInput::CleanUp()
 	SDL_QuitSubSystem(SDL_INIT_EVENTS);
 	return true;
 }
-
-//bool ModuleInput::GetWindowEvent(EventWindow ev) const
-//{
-//	return windowEvents[ev];
-//}

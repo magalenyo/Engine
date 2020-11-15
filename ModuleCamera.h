@@ -35,8 +35,13 @@ public:
 	update_status Update();
 	bool CleanUp();
 
-	void move(const CameraMovement &movementType);
-	void rotate(const CameraRotation& rotationType);
+	void Move(const CameraMovement &movementType);
+	void Rotate(const CameraRotation& rotationType);
+	void OnWindowResized(int width, int height);
+	void SetHorizontalFov(int fov);
+	void SetVerticalFov(int fov);
+	void SetNearPlaneDistance(float dist);
+	void SetFarPlaneDistance(float dist);
 	
 
 private:
@@ -46,6 +51,7 @@ private:
 	float rotationSpeed = 30.0f;
 
 
-	void resetSpeed();
-	void increaseSpeed();
+	void ResetSpeed();
+	void IncreaseSpeed();
+	
 };
